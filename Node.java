@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This represents a node in a graph.
@@ -21,6 +22,7 @@ public class Node {
 		coordinates = coordinatesIn;
 		parent = parentIn;
 		cost = costIn;
+		Collections.sort(neighborList);
 	}
 	public Node(Duple coordinatesIn) {
 		coordinates = coordinatesIn;
@@ -33,9 +35,11 @@ public class Node {
 	public void addNeighbor(Node node, double weight) {
 		NodeValue added = new NodeValue(node, weight);
 		neighborList.add(added);
+		Collections.sort(neighborList);
 	}
 	public void addNeighbor(NodeValue in) {
 		neighborList.add(in);
+		Collections.sort(neighborList);
 	}
 	
 	public ArrayList<NodeValue> getNeighborList() {
@@ -43,6 +47,7 @@ public class Node {
 	}
 	public void setNeighborList(ArrayList<NodeValue> in) {
 		neighborList = in;
+		Collections.sort(neighborList);
 	}
 	public Duple getCoordinates() {
 		return coordinates;
