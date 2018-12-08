@@ -29,6 +29,7 @@ public class AStar {
 				
 				while (!done) {
 					if (currentNode.getParent() == null) {
+						path.add(currentNode);
 						done = true;
 					} else {
 						path.add(currentNode);
@@ -69,7 +70,7 @@ public class AStar {
 				//If the successor is not on open or closed, estimate heuristic, get cost, calculate f(n),
 				//and put on open.
 				if (!found) {
-					double heuristic = neighbor.getNode().getCoordinates().distance(goal.getCoordinates());
+					double heuristic = 111000 * neighbor.getNode().getCoordinates().distance(goal.getCoordinates());
 					double cost = thisNode.getCost() + neighbor.getValue();
 					double f = cost + heuristic;
 					

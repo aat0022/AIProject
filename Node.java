@@ -7,6 +7,8 @@ import java.util.Collections;
  *
  */
 public class Node {
+	//Name of node
+	private String name;
 	//List of adjacent nodes in node-weight pairs
 	private ArrayList<NodeValue> neighborList = new ArrayList<>();
 	//Node coordinates
@@ -17,12 +19,17 @@ public class Node {
 	private double cost = 0;
 	
 	//Multiple constructors for convenience. I expect to use the second one the most.
-	public Node (ArrayList<NodeValue> listIn, Duple coordinatesIn, Node parentIn, double costIn) {
+	public Node (String nameIn, ArrayList<NodeValue> listIn, Duple coordinatesIn, Node parentIn, double costIn) {
+		name = nameIn;
 		neighborList = listIn;
 		coordinates = coordinatesIn;
 		parent = parentIn;
 		cost = costIn;
 		Collections.sort(neighborList);
+	}
+	public Node (Duple coordinatesIn, String nameIn) {
+		coordinates = coordinatesIn;
+		name = nameIn;
 	}
 	public Node(Duple coordinatesIn) {
 		coordinates = coordinatesIn;
@@ -34,14 +41,26 @@ public class Node {
 	//Two methods of input for convenience
 	public void addNeighbor(Node node, double weight) {
 		NodeValue added = new NodeValue(node, weight);
+		NodeValue otherAdded = new NodeValue(this, weight);
 		neighborList.add(added);
+		node.getNeighborList().add(otherAdded);
 		Collections.sort(neighborList);
+		Collections.sort(node.getNeighborList());
 	}
 	public void addNeighbor(NodeValue in) {
 		neighborList.add(in);
+		NodeValue otherAdded = new NodeValue(this, in.getValue());
+		in.getNode().getNeighborList().add(otherAdded);
 		Collections.sort(neighborList);
+		Collections.sort(in.getNode().getNeighborList());
 	}
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String in) {
+		name = in;
+	}
 	public ArrayList<NodeValue> getNeighborList() {
 		return neighborList;
 	}
