@@ -36,12 +36,12 @@ public class Points extends JPanel {
 	Duple wSamfordAndDuggarCoord = new Duple(32.59810, -85.48553);
 	Duple duggarEndCoord = new Duple(32.59869, -85.48556);
 	Duple bibbGravesEndCoord = new Duple(32.59945, -85.48624);
-	ArrayList<Duple> list = new ArrayList<>(Arrays.asList(magAndCollegeCoord, thatchAndSCollegeCoord,
-			rooseveltMillerAndSCollegeCoord, rooseveltAndMellCoord, eMagAndSGayCoord, tichAndNCollegeCoord,
-			wMagAndDonCoord, eThatchAndSGayCoord, millerAndSGayCoord, samfordAndSCollegeCoord, eSamfordAndSGayCoord,
-			wSamfordAndMellCoord, wSamfordAndDuncanCoord, wSamfordAndSDonCoord, heismanAndSDonCoord,
-			heismanBeardEavesAndSDonCoord, wEagleWayAndSDonCoord, quadAndMellCoord, quadEndCoord, bibbAndDuncanCoord,
-			stadiumParkingDeckCoord, wThatchEndCoord, wSamfordAndDuggarCoord, duggarEndCoord, bibbGravesEndCoord));
+//	ArrayList<Duple> list = new ArrayList<>(Arrays.asList(magAndCollegeCoord, thatchAndSCollegeCoord,
+//			rooseveltMillerAndSCollegeCoord, rooseveltAndMellCoord, eMagAndSGayCoord, tichAndNCollegeCoord,
+//			wMagAndDonCoord, eThatchAndSGayCoord, millerAndSGayCoord, samfordAndSCollegeCoord, eSamfordAndSGayCoord,
+//			wSamfordAndMellCoord, wSamfordAndDuncanCoord, wSamfordAndSDonCoord, heismanAndSDonCoord,
+//			heismanBeardEavesAndSDonCoord, wEagleWayAndSDonCoord, quadAndMellCoord, quadEndCoord, bibbAndDuncanCoord,
+//			stadiumParkingDeckCoord, wThatchEndCoord, wSamfordAndDuggarCoord, duggarEndCoord, bibbGravesEndCoord));
 
 	public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -51,50 +51,58 @@ public class Points extends JPanel {
     g2d.setColor(Color.black);
     g2d.setStroke(new BasicStroke(10));
 
-    for (Duple d : list) {
+    ArrayList<Node> list = Driver.getList();
+    for (Node d : list) {
       Dimension size = getSize();
-      int w = size.width ;
-      int h = size.height;
+//      int w = size.width ;
+//      int h = size.height;
 
-      Duple duple = convert(d);
+      Duple duple = convert(d.getCoordinates());
       int x = (int)duple.getX();
 	  int y = (int)duple.getY();
       g2d.drawLine(x, y, x, y);
     }
     g2d.setStroke(new BasicStroke(3));
-    plotLine(magAndCollegeCoord, thatchAndSCollegeCoord, g2d);
-    plotLine(magAndCollegeCoord, eMagAndSGayCoord, g2d);
-    plotLine(magAndCollegeCoord, wMagAndDonCoord, g2d);
-    plotLine(thatchAndSCollegeCoord, eThatchAndSGayCoord, g2d);
-    plotLine(thatchAndSCollegeCoord, wThatchEndCoord, g2d);
-    plotLine(eMagAndSGayCoord, eThatchAndSGayCoord, g2d);
-    plotLine(eThatchAndSGayCoord, millerAndSGayCoord, g2d);
-    plotLine(rooseveltMillerAndSCollegeCoord, thatchAndSCollegeCoord,g2d);
-    plotLine(rooseveltMillerAndSCollegeCoord, millerAndSGayCoord, g2d);
-    plotLine(rooseveltAndMellCoord, rooseveltMillerAndSCollegeCoord, g2d);
-    plotLine(rooseveltAndMellCoord, quadAndMellCoord, g2d);
-    plotLine(samfordAndSCollegeCoord, rooseveltMillerAndSCollegeCoord, g2d);
-    plotLine(eSamfordAndSGayCoord, millerAndSGayCoord, g2d);
-    plotLine(wSamfordAndMellCoord, rooseveltAndMellCoord, g2d);
-    plotLine(wSamfordAndMellCoord, wSamfordAndDuncanCoord, g2d);
-    plotLine(samfordAndSCollegeCoord, wSamfordAndMellCoord, g2d);
-    plotLine(samfordAndSCollegeCoord, eSamfordAndSGayCoord, g2d);
-    plotLine(wSamfordAndDuncanCoord, wSamfordAndSDonCoord, g2d);
-    plotLine(wSamfordAndSDonCoord, heismanAndSDonCoord, g2d);
-    plotLine(heismanAndSDonCoord, heismanBeardEavesAndSDonCoord, g2d);
-    plotLine(wEagleWayAndSDonCoord, heismanBeardEavesAndSDonCoord, g2d);
-    plotLine(wEagleWayAndSDonCoord, wMagAndDonCoord, g2d);
-    plotLine(quadAndMellCoord, quadEndCoord, g2d);
-    plotLine(bibbAndDuncanCoord, wSamfordAndDuncanCoord, g2d);
-    plotLine(bibbAndDuncanCoord, stadiumParkingDeckCoord, g2d);
-    plotLine(bibbAndDuncanCoord, bibbGravesEndCoord, g2d);
-    plotLine(wSamfordAndDuggarCoord, wSamfordAndMellCoord, g2d);
-    plotLine(wSamfordAndDuggarCoord, wSamfordAndDuncanCoord, g2d);
-    plotLine(wSamfordAndDuggarCoord, duggarEndCoord, g2d);
+    for (Node n : list) {
+    	Duple d1 = n.getCoordinates();
+    	for (NodeValue neighbor : n.getNeighborList()) {
+    		Duple d2 = neighbor.getNode().getCoordinates();
+    		plotLine(d1, d2, g2d);
+    	}
+    }
+//    plotLine(magAndCollegeCoord, thatchAndSCollegeCoord, g2d);
+//    plotLine(magAndCollegeCoord, eMagAndSGayCoord, g2d);
+//    plotLine(magAndCollegeCoord, wMagAndDonCoord, g2d);
+//    plotLine(thatchAndSCollegeCoord, eThatchAndSGayCoord, g2d);
+//    plotLine(thatchAndSCollegeCoord, wThatchEndCoord, g2d);
+//    plotLine(eMagAndSGayCoord, eThatchAndSGayCoord, g2d);
+//    plotLine(eThatchAndSGayCoord, millerAndSGayCoord, g2d);
+//    plotLine(rooseveltMillerAndSCollegeCoord, thatchAndSCollegeCoord,g2d);
+//    plotLine(rooseveltMillerAndSCollegeCoord, millerAndSGayCoord, g2d);
+//    plotLine(rooseveltAndMellCoord, rooseveltMillerAndSCollegeCoord, g2d);
+//    plotLine(rooseveltAndMellCoord, quadAndMellCoord, g2d);
+//    plotLine(samfordAndSCollegeCoord, rooseveltMillerAndSCollegeCoord, g2d);
+//    plotLine(eSamfordAndSGayCoord, millerAndSGayCoord, g2d);
+//    plotLine(wSamfordAndMellCoord, rooseveltAndMellCoord, g2d);
+//    plotLine(wSamfordAndMellCoord, wSamfordAndDuncanCoord, g2d);
+//    plotLine(samfordAndSCollegeCoord, wSamfordAndMellCoord, g2d);
+//    plotLine(samfordAndSCollegeCoord, eSamfordAndSGayCoord, g2d);
+//    plotLine(wSamfordAndDuncanCoord, wSamfordAndSDonCoord, g2d);
+//    plotLine(wSamfordAndSDonCoord, heismanAndSDonCoord, g2d);
+//    plotLine(heismanAndSDonCoord, heismanBeardEavesAndSDonCoord, g2d);
+//    plotLine(wEagleWayAndSDonCoord, heismanBeardEavesAndSDonCoord, g2d);
+//    plotLine(wEagleWayAndSDonCoord, wMagAndDonCoord, g2d);
+//    plotLine(quadAndMellCoord, quadEndCoord, g2d);
+//    plotLine(bibbAndDuncanCoord, wSamfordAndDuncanCoord, g2d);
+//    plotLine(bibbAndDuncanCoord, stadiumParkingDeckCoord, g2d);
+//    plotLine(bibbAndDuncanCoord, bibbGravesEndCoord, g2d);
+//    plotLine(wSamfordAndDuggarCoord, wSamfordAndMellCoord, g2d);
+//    plotLine(wSamfordAndDuggarCoord, wSamfordAndDuncanCoord, g2d);
+//    plotLine(wSamfordAndDuggarCoord, duggarEndCoord, g2d);
     
     g2d.setColor(Color.red);
     g2d.setStroke(new BasicStroke(5));
-    Test test = new Test();
+    Driver test = new Driver();
     ArrayList<Node> nodeList = test.run();
     for(int i = 0; i < nodeList.size() - 1; i++) {
     		Node node1 = nodeList.get(i);
@@ -111,14 +119,14 @@ public class Points extends JPanel {
 		JFrame frame = new JFrame("Points");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(points);
-		frame.setSize(300, 250);
+		frame.setSize(800, 800);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
 	private Duple convert(Duple dupleIn) {
-		double dx = ((dupleIn.getY() + 85.4912) / 0.0122) * 300;
-		double dy = 250 - (((dupleIn.getX() - 32.5962) / 0.0111) * 250);
+		double dx = ((dupleIn.getY() + 85.5267) / 0.0924) * 800;
+		double dy = 800 - (((dupleIn.getX() - 32.5755) / 0.0646) * 800);
 		return new Duple(dx, dy);
 	}
 
