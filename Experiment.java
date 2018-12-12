@@ -6,7 +6,6 @@ public class Experiment {
 			long time1 = System.currentTimeMillis();
 			for (int x = 0; x < 100; x++) {
 				test.run();
-				System.out.println(x);
 			}
 			long time2 = System.currentTimeMillis();
 			long experimentTime = time2 - time1;
