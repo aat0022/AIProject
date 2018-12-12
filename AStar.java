@@ -70,7 +70,7 @@ public class AStar {
 				//If the successor is not on open or closed, estimate heuristic, get cost, calculate f(n),
 				//and put on open.
 				if (!found) {
-					double heuristic = 111000 * neighbor.getNode().getCoordinates().distance(goal.getCoordinates());
+					double heuristic = manhattanHeuristic(goal, neighbor);
 					double cost = thisNode.getCost() + neighbor.getValue();
 					double f = cost + heuristic;
 					
@@ -95,7 +95,7 @@ public class AStar {
 						neighbor.getNode().setParent(thisNode);
 						neighbor.getNode().setCost(cost);
 						
-						double heuristic = neighbor.getNode().getCoordinates().distance(goal.getCoordinates());
+						double heuristic = manhattanHeuristic(goal, neighbor);
 						double f = cost + heuristic;
 						NodeValue newPair = new NodeValue(neighbor.getNode(), f);
 						open.add(newPair);
@@ -106,5 +106,16 @@ public class AStar {
 		}
 		//exit with failure if not found by now
 		return new ArrayList<Node>();
+	}
+
+	private double distanceHeuristic(Node goal, NodeValue neighbor) {
+		double heuristic = 111000 * neighbor.getNode().getCoordinates().distance(goal.getCoordinates());
+		return heuristic;
+	}
+	private double manhattanHeuristic(Node goal, NodeValue neighbor) {
+		double xDistance = 111000 * Math.abs(neighbor.getNode().getCoordinates().getX() - goal.getCoordinates().getX());
+		double yDistance = 111000 * Math.abs(neighbor.getNode().getCoordinates().getY() - goal.getCoordinates().getY());
+		double heuristic = xDistance + yDistance;
+		return heuristic;
 	}
 }
