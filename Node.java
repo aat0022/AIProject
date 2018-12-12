@@ -18,7 +18,7 @@ public class Node {
 	//Cost to reach
 	private double cost = 0;
 	
-	//Multiple constructors for convenience. I expect to use the second one the most.
+	//Multiple constructors for convenience. I expect to use the second and third ones the most.
 	public Node (String nameIn, ArrayList<NodeValue> listIn, Duple coordinatesIn, Node parentIn, double costIn) {
 		name = nameIn;
 		neighborList = listIn;
@@ -87,7 +87,6 @@ public class Node {
 		cost = in;
 	}
 	
-	//careful of infinite loop. If infinite loop, remove neighborList from comparison.
 	public boolean equals(Node in) {
 		if (coordinates.getX() == in.getCoordinates().getX() && coordinates.getY() == in.getCoordinates().getY()
 				&& neighborList.equals(in.getNeighborList())) {
